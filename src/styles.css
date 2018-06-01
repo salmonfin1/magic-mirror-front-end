@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+
+table {
+  width: 40%;
+}
+
+.weather-icon {
+  height: 120px;
+  width: 120px;
+}
