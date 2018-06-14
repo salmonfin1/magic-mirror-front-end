@@ -1,3 +1,6 @@
-<p>
-  calendar works!
-</p>
+<mat-nav-list>
+  <mat-list-item *ngFor="let calendar of calendarResponse">
+    <h4 matLine> {{calendar.description}} </h4>
+    <h3 matLine> {{calendar.time}} </h3>
+  </mat-list-item>
+</mat-nav-list>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MagicMirrorService} from '../app.service';
+import {Schedule} from './train.models';
 
 @Component({
   selector: 'app-train',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./train.component.css']
 })
 export class TrainComponent implements OnInit {
-
-  constructor() { }
+  private schedules: Schedule[];
+  constructor(public magicMirrorService: MagicMirrorService) { }
 
   ngOnInit() {
+      const messageObservable = this.magicMirrorService.initializeWebSocketConnection('/trains' );
+      messageObservable.subscribe((response) => this.schedules = JSON.parse(response));
   }
 
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MagicMirrorService} from '../app.service';
+import {Calendar} from './calendar.models';
 
 @Component({
   selector: 'app-calendar',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-
-  constructor() { }
+  private calendarResponse: Calendar[];
+  constructor(public magicMirrorService: MagicMirrorService) { }
 
   ngOnInit() {
+      const messageObservable = this.magicMirrorService.initializeWebSocketConnection('/calendar' );
+      messageObservable.subscribe((response) => this.calendarResponse = JSON.parse(response));
   }
 
 }

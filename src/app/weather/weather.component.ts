@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MagicMirrorService} from '../app.service';
+import {Observable} from 'rxjs';
+import {Weather} from './weather.models';
 
 @Component({
   selector: 'app-weather',
@@ -8,19 +10,24 @@ import {MagicMirrorService} from '../app.service';
 })
 export class WeatherComponent implements OnInit {
 
-  private weatherList;
-
-
+  private weatherResponse: Weather[];
   constructor(public magicMirrorService: MagicMirrorService) {}
 
-  updateWeatherList(response: string) {
-    this.weatherList = JSON.parse(response);
-  }
-
   ngOnInit(): void {
-    this.magicMirrorService.initializeWebSocketConnection(this.updateWeatherList, '/weather' );
+    const messageObservable = this.magicMirrorService.initializeWebSocketConnection('/weather' );
+    messageObservable.subscribe((response) => {
+        const responseObj: Weather[] = JSON.parse(response);
+        for (const weather of responseObj) {
+            weather.main.temp_min = Math.round(weather.main.temp_min - 273.15);
+            weather.main.temp_max = Math.round(weather.main.temp_max - 273.15);
+        }
+        this.weatherResponse = responseObj;
 
+    }
+    );
   }
+
+
 
 
 }

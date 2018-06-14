@@ -1,13 +1,17 @@
-Test
-<mat-card class="example-card">
-  <mat-card-header>
-    <mat-card-title>Cloudy</mat-card-title>
-    <mat-card-subtitle>Min: 5&deg;C Max: 10&deg;C</mat-card-subtitle>
-  </mat-card-header>
-  <img class="weather-icon" mat-card-md-image src="http://openweathermap.org/img/w/04n.png" alt="Cloudy">
-  <mat-card-content>
-    <p>
-      Overcast Clouds
-    </p>
-  </mat-card-content>
-</mat-card>
+<div *ngIf="weatherResponse">
+  <div *ngFor="let weather of weatherResponse">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>Min: {{weather.main.temp_min}}&deg;C Max: {{weather.main.temp_max}}&deg;C</mat-card-title>
+      </mat-card-header>
+      <img class="weather-icon" mat-card-md-image src="http://openweathermap.org/img/w/{{weather.weather[0].icon}}.png" alt="{{weather.weather[0].main}}">
+      <mat-card-content>
+        <p>
+          {{weather.weather[0].description}}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+
+</div>
